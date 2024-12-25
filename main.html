@@ -4,27 +4,91 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>OTP Verification</title>
-  <link rel="stylesheet" href="style.css">
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+      margin: 0;
+      background-color: #f7f7f7;
+    }
+
+    #verification_heading {
+      font-size: 2rem;
+      margin-bottom: 0.5rem;
+    }
+
+    #verification_subtext {
+      font-size: 1rem;
+      margin-bottom: 2rem;
+      color: #555;
+    }
+
+    .code-container {
+      display: flex;
+      gap: 10px;
+    }
+
+    .code {
+      width: 50px;
+      height: 50px;
+      text-align: center;
+      font-size: 1.5rem;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      background-color: #fff;
+    }
+
+    .code:focus {
+      outline: 2px solid #007bff;
+    }
+  </style>
 </head>
 <body>
-  <!-- Heading -->
-  <h1 id="verification_heading">Verify Your Account</h1>
+  <h1 id="verification_heading">OTP Verification</h1>
+  <p id="verification_subtext">Please enter the 6-digit code sent to your phone.</p>
 
-  <!-- Subheading -->
-  <p id="verification_subtext">We emailed you the six digit code to acciojob@email.com Enter the code below to confirm your email address</p>
-
-  <!-- OTP Input Container -->
   <div class="code-container">
-    <input type="text" class="code" maxlength="1"  placeholder="0"/>
-    <input type="text" class="code" maxlength="1"  placeholder="0"/>
-    <input type="text" class="code" maxlength="1"  placeholder="0"/>
-    <input type="text" class="code" maxlength="1"  placeholder="0"/>
-    <input type="text" class="code" maxlength="1"  placeholder="0"/>
-    <input type="text" class="code" maxlength="1"  placeholder="0"/>
+    <input type="text" maxlength="1" class="code" />
+    <input type="text" maxlength="1" class="code" />
+    <input type="text" maxlength="1" class="code" />
+    <input type="text" maxlength="1" class="code" />
+    <input type="text" maxlength="1" class="code" />
+    <input type="text" maxlength="1" class="code" />
   </div>
-  <p class="description">This is Design only. We didn't actually send you an email as we don't have your email right?</p>
 
-  <!-- JavaScript -->
-  <script src="script.js"></script>
+  <script>
+    const inputs = document.querySelectorAll('.code');
+
+    inputs.forEach((input, index) => {
+      input.addEventListener('input', (e) => {
+        if (e.target.value.length > 0 && index < inputs.length - 1) {
+          inputs[index + 1].focus();
+        }
+      });
+
+      input.addEventListener('keydown', (e) => {
+        if (e.key === 'Backspace') {
+          if (input.value === '' && index > 0) {
+            inputs[index - 1].focus();
+          }
+        }
+      });
+
+      input.addEventListener('paste', (e) => {
+        const data = e.clipboardData.getData('text');
+        if (data.length === inputs.length && !isNaN(data)) {
+          inputs.forEach((input, idx) => {
+            input.value = data[idx];
+          });
+          inputs[inputs.length - 1].focus();
+          e.preventDefault();
+        }
+      });
+    });
+  </script>
 </body>
 </html>
