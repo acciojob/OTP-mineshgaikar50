@@ -23,7 +23,8 @@
   #verification_heading {
     font-size: 2rem;
     margin-bottom: 0.5rem;
-    padding-left: 170px;
+    padding-left: 190px;
+	  padding-bottom:20px;
   }
   
   #verification_subtext {
